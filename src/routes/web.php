@@ -12,5 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SerieController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/teste', [HomeController::class, 'index']);
+Route::get('/series', [SerieController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index']);

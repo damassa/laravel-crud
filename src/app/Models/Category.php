@@ -5,10 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Serie extends Model
+class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'plot', 'image', 'opening-video', 'year', 'duration'];
-
-    
 }
