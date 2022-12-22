@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,21 +13,40 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SerieController;
-use App\Http\Controllers\CategoryController;
 
-Route::get('/ola', [HomeController::class, 'index']);
+Route::get('/', function () {
+    return view('welcome');
+});
 
-/* Series */ 
-Route::get('/series', [SerieController::class, 'index']);
-Route::get('/series/{id}', [SerieController::class, 'show']);
-Route::get('/serie', [SerieController::class, 'create']);
-Route::post('/serie', [SerieController::class, 'store']);
-Route::get('/serie/{id}/edit', [SerieController::class, 'edit'])->name('edit');
-Route::post('/serie/{id}/update', [SerieController::class, 'update'])->name('update');
-Route::get('/serie/{id}/delete', [SerieController::class, 'delete'])->name('delete');
-Route::post('/serie/{id}/delete', [SerieController::class, 'remove'])->name('remove');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-/* Categories */
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+Route::controller(SerieController::class)
+    ->group(function () {
+        Route::prefix('/series')->group(function () {
+            Route::get('/', 'index')->name('series');
+            Route::get('/{id}', 'show');
+        });
+
+        Route::prefix('/serie')
+            ->middleware('auth')
+            ->group(function () {
+                Route::get('/', 'create');
+                Route::post('/', 'store');
+
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::post('/{id}/update', 'update')->name('update');
+
+                Route::post('/{id}/delete', 'delete')->name('delete');
+                Route::post('/{id}/remove', 'remove')->name('remove');
+            });
+    });

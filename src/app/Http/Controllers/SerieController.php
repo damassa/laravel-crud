@@ -17,7 +17,9 @@ class SerieController extends Controller
     }
 
     public function index() {
-        return view('series', ['series'=>$this->serie->all()]);
+        $modelSerie = new Serie();
+        $series = $modelSerie->all();
+        return view('pages.index', ['series' => $series]);
     }
 
     public function show($id) {
