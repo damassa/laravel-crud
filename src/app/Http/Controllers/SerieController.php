@@ -10,7 +10,7 @@ class SerieController extends Controller
     /**
      * @var Serie
      */
-    private $serie;
+    protected $serie;
 
     public function __construct() {
         $this->serie = new Serie();
@@ -19,49 +19,52 @@ class SerieController extends Controller
     public function index() {
         $modelSerie = new Serie();
         $series = $modelSerie->all();
-        return view('pages.index', ['series' => $series]);
+        return view('pages.serie.index', ['series' => $series]);
     }
 
     public function show($id) {
-        return view('serie', ['serie'=> Serie::find($id)]);
+        return view(
+            'pages.serie.single',
+            ['serie' => Serie::find($id)]
+        );
     }
 
     public function create() {
-        return view('serie_create');
+        return view('pages.serie.create');
     }
 
     public function store(Request $request) {
         $newSerie = $request->all();
         if (Serie::create($newSerie)) {
-            return redirect('/series');
+            return redirect('/dashboard');
         } else dd("Error while inserting new serie.");
     }
 
     public function edit($id) {
-        $data = ['serie' => Serie::find($id)];
-        return view('serie_edit', $data);
-    }
+        return view('pages.serie.edit', ['serie' => Serie::find($id)]);
+    }    
 
     public function update(Request $request, $id) {
         $updatedSerie = $request->all();
         if (!Serie::find($id)->update($updatedSerie)) {
             dd("Error while updating serie $id");
         }
-        return redirect('/series');
+        return redirect('/dashboard');
     }
 
     public function delete($id) {
-        if(Produto::find($id)->delete())
-            return redirect('/series');
-        else dd($id);    
+        return view(
+            'pages.serie.delete',
+            ['serie' => Serie::find($id)]
+        );
     }
 
     public function remove(Request $request, $id) {
-        if($request->confirmar==="Delete") {
+        if($request->confirmar=="Delete") {
             if(!Serie::destroy($id)) {
                 dd("Error while deleting serie $id");
             }
         }
-        return redirect('/series');
+        return redirect('/dashboard');
     }
 }

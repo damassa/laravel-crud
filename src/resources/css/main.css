@@ -8,17 +8,4 @@ body div{
     text-align: center;
 }
 
-table thead{
-    background-color:gray; color:black
-}
-
-.table-odd tbody tr:nth-child(odd){
-    background-color: lightgray
-}
-
-.table-hover tbody tr:hover{
-    background-color: darkgrey;
-    color: #727272
-}
-
-h2{color:green}
+h2{color:blue}

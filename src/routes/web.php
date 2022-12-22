@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SerieController;
+use App\Models\Serie;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('landing', ['series'=>Serie::all()]);
+})->name('landing');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard',
+        ['series'=>Serie::all(),
+        'users'=>User::all()
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard/serie/{id}', function ($id) {
+    return view('pages.serie.single-dash', ['serie'=>Serie::find($id)]);
+})->middleware(['auth', 'verified'])->name('serie.single-dash');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,7 +44,7 @@ Route::controller(SerieController::class)
     ->group(function () {
         Route::prefix('/series')->group(function () {
             Route::get('/', 'index')->name('series');
-            Route::get('/{id}', 'show');
+            Route::get('/{id}', 'show')->name('single');
         });
 
         Route::prefix('/serie')
@@ -46,7 +56,7 @@ Route::controller(SerieController::class)
                 Route::get('/{id}/edit', 'edit')->name('edit');
                 Route::post('/{id}/update', 'update')->name('update');
 
-                Route::post('/{id}/delete', 'delete')->name('delete');
+                Route::get('/{id}/delete', 'delete')->name('delete');
                 Route::post('/{id}/remove', 'remove')->name('remove');
             });
     });
