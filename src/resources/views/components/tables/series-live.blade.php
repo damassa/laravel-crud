@@ -6,19 +6,23 @@
     @vite('resources/css/table.css')
     <thead>
         <tr>
-            <th><a href="#" wire:click='orderBy'>Id</a></th>
+            <th><a href="#" wire:click='orderBy'>ID</a></th>
             <th><a href="#" wire:click='orderByName'>Name</a></th>
-            <th>plot</th>
-            <th>image</th>
-            <th>opening_video</th>
+            <th>Plot</th>
+            <th>Image Card</th>
+            <th>Opening Video</th>
             <th><a href="#" wire:click='orderByYear'>Year</a></th>
-            <th>duration</th>
+            <th>Duration</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($series as $serie)
             <tr>
                 @if (Auth::user())
+                <div>
+                    <input type="checkbox" class="read-more-state" id="{{$serie->id}}">
+                </div>
                     <td><a href="{{ route('serie.single-dash', $serie->id) }}">{{ $serie->id }}</a></td>
                     <td><a href="{{ route('serie.single-dash', $serie->id) }}">{{ $serie->name }}</a></td>
                 @else
@@ -27,7 +31,8 @@
                 @endif
 
                 <td>{{ $serie->plot }}</td>
-                <td>{{ $serie->image }}</td>
+                <td><img src="{{ $serie->image }}" alt="Serie"></td>
+                <td><video width="250" height="150"><source type="video/youtube" src="{{ $serie->opening_video }}"></video></td>
                 <td>{{ $serie->year }}</td>
                 <td>{{ $serie->duration }} minutes</td>
                 @if (Auth::user())

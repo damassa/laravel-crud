@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('series')" ::active="request()->routeIs('series')">
-                        {{ __('Series Livewire') }}
+                        {{ __('Series') }}
                     </x-nav-link>
                 </div>
             </div>

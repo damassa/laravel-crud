@@ -63,7 +63,8 @@ class Series extends Component
             $this->orderAsc = false;
             $this->orderBy();
         } catch(Exception $e) {
-            dd('Error while adding serie');
+            // dd('Error while adding serie');
+            dd($e->getMessage());
         }
     }
 

@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Serie extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'plot', 'image', 'opening-video', 'year', 'duration'];
+    protected $fillable = ['category_id', 'name', 'plot', 'image', 'opening_video', 'year', 'duration'];
 
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
     
 }

@@ -1,5 +1,5 @@
 @import url('app.css');
-@import url('colors/green_pallet.css');
+@import url('colors/purple_pallet.css');
 
 table{
     margin: auto;
@@ -10,7 +10,7 @@ table th{
 }
 
 table td{
-    background-color: 'white';
+    background-color: rgb(247, 241, 241);
     color:var(--firstColor);
 }
 
@@ -30,5 +30,5 @@ button{
 button:hover{
     background-color: var(--firstColor);
     border-color: var(--secondColor);
-    color:white
+    color:#f6f6f6;
 }

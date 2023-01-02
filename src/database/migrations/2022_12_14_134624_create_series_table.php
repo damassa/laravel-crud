@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->text('name');
             $table->text('plot');
             $table->text('image');
