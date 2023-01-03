@@ -14,6 +14,7 @@ class Series extends Component
     public $orderColumn = 'id';
 
     public $name;
+    private $category_id = 1;
     public $plot;
     public $image;
     public $opening_video;
@@ -49,6 +50,7 @@ class Series extends Component
 
     public function save() {
         $serie = [
+            "category_id" => $this->category_id,
             "name" => $this->name,
             "plot" => $this->plot,
             "image" => $this->image,
