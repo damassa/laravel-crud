@@ -1,9 +1,21 @@
 <div x-data="{
-    open: false,
     idmodal:null,
-}">
-<table {{ $attributes->merge(['class' => 'table table-' . $type]) }}>
-    @vite('resources/css/table.css')
+    orderColumn:@entangle('orderColumn'),
+    orderAsc:@entangle('orderAsc'),
+    start() {
+        console.log({column:this.orderColumn, asc:this.orderAsc})
+    },
+    orderBy(column='id') {
+        this.orderColumn = column
+        this.orderAsc = !this.orderAsc
+        console.log({order:this.orderColumn, asc:this.orderAsc})
+        $wire.set('orderColumn', this.orderColumn)
+        $wire.set('orderAsc', this.orderAsc)
+        $wire.orderBy(this.orderColumn)
+    }
+}" x-init="start()">
+@vite('resources/css/table.css')
+<table class="table table-odd">
     <thead>
         <tr>
             <th><a href="#" wire:click='orderBy'>ID</a></th>
@@ -13,16 +25,13 @@
             <th>Opening Video</th>
             <th><a href="#" wire:click='orderByYear'>Year</a></th>
             <th>Duration</th>
-            <th>Actions</th>
+            <th colspan="2">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($series as $serie)
             <tr>
                 @if (Auth::user())
-                <div>
-                    <input type="checkbox" class="read-more-state" id="{{$serie->id}}">
-                </div>
                     <td><a href="{{ route('serie.single-dash', $serie->id) }}">{{ $serie->id }}</a></td>
                     <td><a href="{{ route('serie.single-dash', $serie->id) }}">{{ $serie->name }}</a></td>
                 @else
@@ -30,7 +39,7 @@
                     <td><a href="/series/{{ $serie->id }}">{{ $serie->name }}</a></td>
                 @endif
 
-                <td>{{ $serie->plot }}</td>
+                <td>{{ substr($serie->plot, 0, 20)."..." }}</td>
                 <td><img src="{{ $serie->image }}" alt="Serie"></td>
                 <td><video width="250" height="150"><source type="video/youtube" src="{{ $serie->opening_video }}"></video></td>
                 <td>{{ $serie->year }}</td>

@@ -18,8 +18,7 @@ class SerieController extends Controller
 
     public function index() {
         $modelSerie = new Serie();
-        $series = $modelSerie->all();
-        return view('pages.serie.index', ['series' => $series]);
+        return view('pages.serie.index', ['series' => $modelSerie->all()]);
     }
 
     public function show($id) {
@@ -42,7 +41,7 @@ class SerieController extends Controller
 
     public function edit($id) {
         return view('pages.serie.edit', ['serie' => Serie::find($id)]);
-    }    
+    }
 
     public function update(Request $request, $id) {
         $updatedSerie = $request->all();

@@ -1,4 +1,4 @@
-<!-- <x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-</x-app-layout> -->
+</x-app-layout>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -27,12 +27,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class='text-4xl'>Series</h2>
-                    @if (isset($series) && $series->count() > 0)
+                    @if (isset($listSeries) && $listSeries->count() > 0)
 
                         <div style="display:flex; flex-direction: row; justify-content:flex-end">
                             <a href="/serie"><button>Add new serie</button></a>
                         </div>
-                        <x-tables.series :series="$series" class='table-odd' type='hover' />
+                        <x-tables.series :series="$listSeries" class='table-odd' />
+                        {{-- {{$series->links()}}
+                        <x-tables.series :series="collect($series->items())" class='table-odd' /> --}}
                     @else
                         <p>Series not found! </p>
                     @endif

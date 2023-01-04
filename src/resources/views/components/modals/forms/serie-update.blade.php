@@ -8,19 +8,12 @@
             if (this.serie.year &&
                 this.serie.duration) {
                 console.log({ serie: this.serie });
-                $wire.set('name', this.serie.name)
-                $wire.set('plot', this.serie.plot)
-                $wire.set('image', this.serie.image)
-                $wire.set('opening_video', this.serie.opening_video)
-                $wire.set('year', this.serie.year)
-                $wire.set('duration', this.serie.duration)
-                $wire.update(this.serie.id)
+                $wire.update(this.serie)
             } else {
                 alert('Error while updating serie!')
             }
         },
-        start()
-    }" x-init="start()">
+    }">
         <form @submit.prevent="update()" id="serie-update-{{ $serie->id }}">
             {{-- @csrf --}}
             {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"/> --}}
@@ -55,10 +48,10 @@
             </table>
         </form>
         <div class='flex justify-center gap-24 w-full'>
-            <x-secondary-button @click="idmodal=null">
+            <x-secondary-button @click=" idmodal=null ">
                 Cancel
             </x-secondary-button>
-            <x-primary-button form="serie-update-{{ $serie->id }}" @click="idmodal=null">
+            <x-primary-button form="serie-update-{{ $serie->id }}" @click=" idmodal=null ">
                 Update
             </x-primary-button>
         </div>
