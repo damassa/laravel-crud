@@ -18,14 +18,16 @@
 <table class="table table-odd">
     <thead>
         <tr>
-            <th><a href="#" wire:click='orderBy'>ID</a></th>
-            <th><a href="#" wire:click='orderByName'>Name</a></th>
+            <th><a href="#" @click=" orderBy()">ID</a></th>
+            <th><a href="#" @click=" orderBy('name') ">Name</a></th>
             <th>Plot</th>
             <th>Image Card</th>
             <th>Opening Video</th>
             <th><a href="#" wire:click='orderByYear'>Year</a></th>
             <th>Duration</th>
-            <th colspan="2">Actions</th>
+            @if (Auth::user())
+                <th colspan="2">Actions</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -70,7 +72,15 @@
         trigger="idmodal"
         >
         <x-slot name="title">{{$serie->name.' ('.$serie->id.')'}}</x-slot>
-        <x-modals.forms.serie-remove :serie="$serie"/>
+        <x-modals.forms.serie-remove
+            :serie="$serie"
+            :category="Arr::first(
+                Arr::where(
+                    $categories,
+                    fn($category)=>$category['id']===$serie->category_id
+                )
+            )"
+        />
     </x-forms.serie-modal>
 @endforeach
 @foreach ($series as $serie)
@@ -79,7 +89,7 @@
         trigger="idmodal"
         >
         <x-slot name="title">{{$serie->name.' ('.$serie->id.')'}}</x-slot>
-        <x-modals.forms.serie-update :serie="$serie"/>
+        <x-modals.forms.serie-update :serie="$serie" :categories="$categories"/>
     </x-forms.serie-modal>
 @endforeach
 <div>

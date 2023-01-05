@@ -1,11 +1,20 @@
 <div x-cloak>
     <div x-show="open"
         x-bind:class="!open ? 'hidden' :
-            'overflow-y-auto overflow-x-hidden flex justify-center fixed top-0 right-0 left-0 z-50 h-modal md:h-full bg-gray-900/25'">
+            'overflow-y-auto overflow-x-hidden flex justify-center fixed top-0 right-0 left-0 z-50 h-modal md:h-full bg-gray-900/25'"
+        x-data="{
+            categories:@js($categories),
+            save(){
+                if($refs.select.value==0)
+                    return alert('Choose a valid category.')
+                $wire.save()
+                open=false
+            }
+        }">
         <div class="flex rounded-md p-5 flex-col justify-center w-fit min-w-min mt-10 bg-white"
             @click.away="open = false">
             <h1 class='text-center text-2xl font-bold pb-4 mb-4 border-b-2 border-gray-300'>New Serie</h1>
-            <form @submit.prevent="$wire.save(); open=false" id="serie-create" >
+            <form @submit.prevent="save() id="serie-create" >
                 <table>
                     <tr>
                         <td>Name:</td>
@@ -33,7 +42,7 @@
                         <td>Duration:</td>
                         <td><input wire:model.defer='serie.duration' type="number" name="duration" /></td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <td>Category:</td>
                         <td>
                             <select x-ref="select" required min='1' name="category" wire:model.defer="serie.category">
@@ -43,7 +52,7 @@
                                 </template>
                             </select>
                         </td>
-                    </tr> --}}
+                    </tr>
                 </table>
             </form>
             <div class='flex mt-4 justify-center gap-24 w-full'>

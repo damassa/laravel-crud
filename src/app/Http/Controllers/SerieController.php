@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Serie;
 use Illuminate\Http\Request;
 
 class SerieController extends Controller
 {
-    /**
-     * @var Serie
-     */
-    protected $serie;
-
-    public function __construct() {
-        $this->serie = new Serie();
-    }
 
     public function index() {
         $modelSerie = new Serie();
-        return view('pages.serie.index', ['series' => $modelSerie->all()]);
+        return view('pages.serie.index', ['series' => $modelSerie->paginate(4)]);
     }
 
     public function show($id) {
@@ -29,24 +22,29 @@ class SerieController extends Controller
     }
 
     public function create() {
-        return view('pages.serie.create');
+        return view('pages.serie.create', ['categories' => Category::all()]);
     }
 
     public function store(Request $request) {
-        $newSerie = $request->all();
-        if (Serie::create($newSerie)) {
-            return redirect('/dashboard');
-        } else dd("Error while inserting new serie.");
+        if ($request->has('confirm')) {
+            $newSerie = $request->all();
+            if(!Serie::create($newSerie)) {
+                dd("Error while creating serie.");
+            }
+        }
+        return redirect('/dashboard');
     }
 
     public function edit($id) {
-        return view('pages.serie.edit', ['serie' => Serie::find($id)]);
+        return view('pages.serie.edit', ['serie' => Serie::find($id), 'categories'=>Category::all()]);
     }
 
     public function update(Request $request, $id) {
-        $updatedSerie = $request->all();
-        if (!Serie::find($id)->update($updatedSerie)) {
-            dd("Error while updating serie $id");
+        if($request->has('confirm')) {
+            $updatedSerie = $request->all();
+            if(!Serie::find($id)->update($updatedSerie)) {
+                dd("Error while updating.");
+            }
         }
         return redirect('/dashboard');
     }
@@ -54,12 +52,12 @@ class SerieController extends Controller
     public function delete($id) {
         return view(
             'pages.serie.delete',
-            ['serie' => Serie::find($id)]
+            ['serie' => Serie::find($id)->load('category')]
         );
     }
 
     public function remove(Request $request, $id) {
-        if($request->confirmar=="Delete") {
+        if($request->has('confirm')) {
             if(!Serie::destroy($id)) {
                 dd("Error while deleting serie $id");
             }

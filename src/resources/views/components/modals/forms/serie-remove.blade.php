@@ -2,7 +2,6 @@
     <p>{{ $serie->name }}</p>
     <ul>
         <li>Image: {{ $serie->image }}</li>
-        <li>Category: {{ $serie->category_id }}</li>
     </ul>
     <form id="{{ $serie->id }}" wire:submit.prevent="remove({{ $serie->id }})" method="POST">
         <h4 style="color:red;font-weight:bold">Sure you want to remove this serie?</h4>

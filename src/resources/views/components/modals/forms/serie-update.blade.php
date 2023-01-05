@@ -2,9 +2,11 @@
 <div class="flex flex-col justify-center w-fit shadow dark:bg-gray-700 h-fit m-0 p-3 bg-white self-center rounded-md">
     <div x-data="{
         serie: @js($serie),
+        categories:@js($categories)
         update() {
             this.serie.year = Number(this.serie.year)
             this.serie.duration = Number(this.serie.duration)
+            this.serie.category_id = +this.serie.category_id
             if (this.serie.year &&
                 this.serie.duration) {
                 console.log({ serie: this.serie });
@@ -44,6 +46,20 @@
                 <tr>
                     <td>Duration:</td>
                     <td><input x-model="serie.duration" type="number" name="duration" /></td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td>
+                        <select x-ref="select" required min='1' name="category" x-model="serie.category_id">
+                            <template x-for="category in categories">
+                                <option
+                                    x-bind:selected="category.id === serie.category_id"
+                                    x-bind:value="category.id"
+                                    x-text="category.nome"
+                                />
+                            </template>
+                        </select>
+                    </td>
                 </tr>
             </table>
         </form>

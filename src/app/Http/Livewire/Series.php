@@ -32,9 +32,7 @@ class Series extends Component
         $this->listSeries = Serie::orderBy(
             $this->orderColumn,
             $this->orderAsc ? 'asc' : 'desc'
-        )->get();
-        // $this->orderAsc = !$this->orderAsc;
-        // Log::channel('stderr')->info($this->orderAsc?'asc':'desc');
+        )->limit(4)->get();
         $this->log($this->orderAsc?'asc':'desc');
     }
 
@@ -53,7 +51,7 @@ class Series extends Component
 
     public function save() {
         $newSerie = $this->serie;
-        $newSerie['category_id'] = $this->category_id;
+        $newSerie['category_id'] = $this->serie['category_id'];
         try {
             Serie::create($newSerie);
             $this->log(['saved', $newSerie]);
@@ -63,25 +61,6 @@ class Series extends Component
         } catch(Exception $e) {
             dd($e->getMessage());
         }
-        // $serie = [
-        //     "category_id" => $this->category_id,
-        //     "name" => $this->name,
-        //     "plot" => $this->plot,
-        //     "image" => $this->image,
-        //     "opening_video" => $this->opening_video,
-        //     "year" => $this->year,
-        //     "duration" => $this->duration,
-        // ];
-
-        // try {
-        //     Serie::create($serie);
-        //     $this->clear();
-        //     $this->orderAsc = false;
-        //     $this->orderBy();
-        // } catch(Exception $e) {
-        //     // dd('Error while adding serie');
-        //     dd($e->getMessage());
-        // }
     }
 
     public function remove($id) {
@@ -93,12 +72,6 @@ class Series extends Component
     }
 
     private function clear() {
-        // $this->name = '';
-        // $this->plot = '';
-        // $this->image = '';
-        // $this->opening_video = '';
-        // $this->year = 0;
-        // $this->duration = 0;
         $this->serie = [];
     }
 
@@ -106,22 +79,8 @@ class Series extends Component
         $this->serie = $updatedSerie;
         $this->log(['updated', $this->serie]);
         Serie::findOrFail($this->serie['id'])->update($this->serie);
-        // $this->orderAsc = !$this->orderAsc;
         $this->orderBy($this->orderColumn);
         $this->clear();
-        // $serie = [
-        //     'name' => $this->name,
-        //     'plot' => $this->plot,
-        //     'image' => $this->image,
-        //     'opening_video' => $this->opening_video,
-        //     'year' => $this->year,
-        //     'duration' => $this->duration,
-        //     'category_id' => $this->category_id
-        // ];
-        // Serie::findOrFail($id)->update($serie);
-        // $this->orderAsc = !$this->orderAsc;
-        // $this->orderBy($this->orderColumn);
-        // $this->clear();
     }
 
     public function log($var) {

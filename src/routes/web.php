@@ -43,7 +43,7 @@ require __DIR__.'/auth.php';
 Route::controller(SerieController::class)
     ->group(function () {
         Route::prefix('/series')->group(function () {
-            Route::get('/', 'index')->name('series');
+            Route::get('/', 'index')->name('series')->middleware('auth');
             Route::get('/{id}', 'show')->name('single');
         });
 
