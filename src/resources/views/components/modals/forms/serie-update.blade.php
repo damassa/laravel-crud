@@ -2,7 +2,7 @@
 <div class="flex flex-col justify-center w-fit shadow dark:bg-gray-700 h-fit m-0 p-3 bg-white self-center rounded-md">
     <div x-data="{
         serie: @js($serie),
-        categories:@js($categories)
+        categories:@js($categories),
         update() {
             this.serie.year = Number(this.serie.year)
             this.serie.duration = Number(this.serie.duration)
@@ -15,7 +15,10 @@
                 alert('Error while updating serie!')
             }
         },
-    }">
+        start() {
+            console.log(this.categories)
+        }
+    }" x-init="start()">
         <form @submit.prevent="update()" id="serie-update-{{ $serie->id }}">
             {{-- @csrf --}}
             {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"/> --}}
@@ -55,7 +58,7 @@
                                 <option
                                     x-bind:selected="category.id === serie.category_id"
                                     x-bind:value="category.id"
-                                    x-text="category.nome"
+                                    x-text="category.name"
                                 />
                             </template>
                         </select>

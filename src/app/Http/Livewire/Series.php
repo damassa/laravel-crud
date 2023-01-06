@@ -15,7 +15,6 @@ class Series extends Component
     public $listSeries;
     public $orderAsc = true;
     public $orderColumn = 'id';
-    private $category_id = 1;
 
 
     public function mount() {

@@ -19,7 +19,7 @@
     <thead>
         <tr>
             <th><a href="#" @click=" orderBy()">ID</a></th>
-            <th><a href="#" @click=" orderBy('name') ">Name</a></th>
+            <th><a href="#" @click=" eorderBy('name') ">Name</a></th>
             <th>Plot</th>
             <th>Image Card</th>
             <th>Opening Video</th>

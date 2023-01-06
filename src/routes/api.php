@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('series', [SerieController::class, 'index']);
 Route::get('series/{id}', [SerieController::class, 'show']);
 Route::post('series', [SerieController::class, 'store']);
-Route::put('series/{id}', [SerieController::class, 'update']);
+Route::put('series/{id}', [SerieController::class, 'update'])->middleware(['auth:sanctum', 'ability:is-admin']);
 Route::delete('series/{id}', [SerieController::class, 'remove']);
 
 Route::middleware('auth:sanctum')->group(function() {
@@ -43,4 +43,4 @@ Route::middleware('auth:sanctum')->group(function() {
 });
 
 Route::post('/users', [UserController::class, 'store']);
-Route::post('login', [UserController::class, 'login']);
+Route::post('login', [LoginController::class, 'login']);

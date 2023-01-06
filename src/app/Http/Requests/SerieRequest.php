@@ -24,7 +24,7 @@ class SerieRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=> 'required | min:1 ',
+            'name'=> 'required | min:10 ',
         ];
     }
 

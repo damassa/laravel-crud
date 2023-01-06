@@ -9,12 +9,12 @@
                     return alert('Choose a valid category.')
                 $wire.save()
                 open=false
-            }
+            },
         }">
         <div class="flex rounded-md p-5 flex-col justify-center w-fit min-w-min mt-10 bg-white"
             @click.away="open = false">
             <h1 class='text-center text-2xl font-bold pb-4 mb-4 border-b-2 border-gray-300'>New Serie</h1>
-            <form @submit.prevent="save() id="serie-create" >
+            <form @submit.prevent="save()" id="serie-create" >
                 <table>
                     <tr>
                         <td>Name:</td>
@@ -45,7 +45,7 @@
                     <tr>
                         <td>Category:</td>
                         <td>
-                            <select x-ref="select" required min='1' name="category" wire:model.defer="serie.category">
+                            <select x-ref="select" required min='1' name="category_id" wire:model.defer="serie.category_id">
                                 <option value=0 selected placeholder>Choose a category:</option>
                                 <template x-for="category in categories">
                                     <option x-bind:value="category.id" x-text="category.name">

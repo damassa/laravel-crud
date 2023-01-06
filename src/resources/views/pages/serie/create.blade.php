@@ -30,6 +30,17 @@
                 <td>Duration:</td>
                 <td><input type="number" name="duration" /></td>
             </tr>
+            <tr>
+                <td>Category:</td>
+                <td>
+                    <select  required min='1' name="category_id">
+                        <option value=0 selected placeholder>Choose a category:</option>
+                        @foreach($categories as $category)>
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </td>
+            </tr>
         </table>
     </form>
     <input type="submit" value="Create" form='create'/>
