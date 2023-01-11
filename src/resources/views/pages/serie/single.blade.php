@@ -9,7 +9,7 @@
             <tbody>
                 <tr>
                     <th>Image</th>
-                    <td>{{ $serie->image }}</td>
+                    <td><img src="{{ $serie->image }}" alt="Serie" width="300" height="300"></td>
                 </tr>
                 <tr>
                     <th>Opening Video</th>
@@ -25,6 +25,7 @@
                 </tr>
             </tbody>
         </table>
+        {{-- <button id="toggleFavorite()"></button> --}}
         <a href="{{ route('edit', $serie->id) }}"><button>edit</button></a>
         <a href="{{ route('delete', $serie->id) }}"><button>delete</button></a>
     @else

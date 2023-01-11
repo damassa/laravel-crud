@@ -45,10 +45,14 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category) {
         $statusHttp = 500;
         try {
+            if(!$request->user()->tokenCan('is-admin')) {
+                $statusHttp = 403;
+                throw new \Exception("You don't have permission to do that.");
+            }
             $data = $request->all();
             $category->update($data);
             return response()->json([
-                'message' => 'Category added.',
+                'message' => 'Category updated.',
                 'Category' => $category
             ]);
         } catch (\Exception $error) {

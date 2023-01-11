@@ -38,10 +38,10 @@ class SerieController extends Controller
     {
         try{
             $newSerie = $request->all();
-            $storedSerie = Produto::create($newSerie);
+            $storedSerie = Serie::create($newSerie);
             return response()->json([
                 'message'=>'Serie inserted.',
-                'produto'=>$storedSerie
+                'serie'=>$storedSerie
             ]);
         }catch(Exception $error){
             $message = [
